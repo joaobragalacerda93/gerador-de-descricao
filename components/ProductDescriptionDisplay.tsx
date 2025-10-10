@@ -9,8 +9,8 @@ interface ProductDescriptionDisplayProps {
 }
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
-  <div className="bg-slate-800/60 p-6 rounded-xl border border-slate-700 shadow-lg mb-6">
-    <h2 className="text-2xl font-bold mb-4 text-purple-300 flex items-center">
+  <div className="bg-blue-900/30 p-6 rounded-xl border border-blue-800 shadow-lg mb-6">
+    <h2 className="text-2xl font-bold mb-4 text-[#ffe600] flex items-center">
       <span className="mr-2">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -29,11 +29,11 @@ const ProductDescriptionDisplay: React.FC<ProductDescriptionDisplayProps> = ({ d
     <div className="animate-fade-in">
       <Section title="Título e Slogan">
         <div className="relative">
-          <h3 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 pr-12">{title}</h3>
+          <h3 className="text-3xl font-extrabold text-[#ffe600] pr-12">{title}</h3>
           <ClipboardCopyButton textToCopy={title} />
         </div>
         <div className="relative mt-2">
-          <p className="text-lg italic text-pink-300 pr-12">"{catchyPhrase}"</p>
+          <p className="text-lg italic text-yellow-300 pr-12">"{catchyPhrase}"</p>
           <ClipboardCopyButton textToCopy={catchyPhrase} />
         </div>
       </Section>
@@ -64,7 +64,7 @@ const ProductDescriptionDisplay: React.FC<ProductDescriptionDisplayProps> = ({ d
       <Section title="Especificações Técnicas">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {Object.entries(technicalSpecifications).map(([key, value]) => (
-            <div key={key} className="bg-slate-700/50 p-3 rounded-lg">
+            <div key={key} className="bg-blue-900/50 p-3 rounded-lg">
               <strong className="text-slate-300">{key}:</strong> <span className="text-white">{value}</span>
             </div>
           ))}
@@ -74,7 +74,7 @@ const ProductDescriptionDisplay: React.FC<ProductDescriptionDisplayProps> = ({ d
       <Section title="Perguntas Frequentes (FAQ)">
         <div className="space-y-4">
           {faq.map((item, index) => (
-            <div key={index} className="border-l-4 border-purple-500 pl-4">
+            <div key={index} className="border-l-4 border-[#ffe600] pl-4">
               <h4 className="font-semibold text-lg">{item.question}</h4>
               <p className="mt-1 text-slate-300">{item.answer}</p>
             </div>
@@ -92,7 +92,7 @@ const ProductDescriptionDisplay: React.FC<ProductDescriptionDisplayProps> = ({ d
                         href={source.web.uri}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm bg-slate-700 text-purple-300 px-3 py-1 rounded-full hover:bg-slate-600 transition-colors"
+                        className="text-sm bg-blue-900/60 text-yellow-300 px-3 py-1 rounded-full hover:bg-blue-800/60 transition-colors"
                     >
                         {source.web.title || new URL(source.web.uri).hostname}
                     </a>
