@@ -9,20 +9,28 @@ const ClipboardCopyButton: React.FC<ClipboardCopyButtonProps> = ({ textToCopy })
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = () => {
+    if (isCopied) return;
     navigator.clipboard.writeText(textToCopy).then(() => {
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
+      setTimeout(() => setIsCopied(false), 1500); // Reverte o ícone mais rápido
     });
   };
 
   return (
     <button
       onClick={handleCopy}
-      className="absolute top-0 right-0 p-2 text-slate-400 hover:text-white transition-colors duration-200"
+      disabled={isCopied}
+      className="absolute top-0 right-0 p-2 text-slate-400 hover:text-white transition-all duration-200 disabled:cursor-default"
       aria-label="Copiar para a área de transferência"
     >
       {isCopied ? (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="h-5 w-5 text-green-400 transform scale-110 transition-transform duration-200" 
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
         </svg>
       ) : (

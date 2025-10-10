@@ -1,4 +1,3 @@
-
 import React from 'react';
 import type { ProductDescription, Source } from '../types';
 import ClipboardCopyButton from './ClipboardCopyButton';
@@ -6,6 +5,8 @@ import ClipboardCopyButton from './ClipboardCopyButton';
 interface ProductDescriptionDisplayProps {
   description: ProductDescription;
   sources: Source[];
+  listStyle: 'bullets' | 'numbered';
+  fontSize: string;
 }
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
@@ -22,11 +23,20 @@ const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title
   </div>
 );
 
-const ProductDescriptionDisplay: React.FC<ProductDescriptionDisplayProps> = ({ description, sources }) => {
-  const { title, catchyPhrase, detailedDescription, features, technicalSpecifications, faq } = description;
+const ProductDescriptionDisplay: React.FC<ProductDescriptionDisplayProps> = ({ description, sources, listStyle, fontSize }) => {
+  const { title, catchyPhrase, targetAudience, detailedDescription, features, technicalSpecifications, faq } = description;
+
+  const fontSizeClasses: { [key: string]: string } = {
+    sm: 'text-sm',
+    base: 'text-base',
+    lg: 'text-lg',
+    xl: 'text-xl',
+  };
+
+  const mainClass = `animate-fade-in ${fontSizeClasses[fontSize] || 'text-base'}`;
 
   return (
-    <div className="animate-fade-in">
+    <div className={mainClass}>
       <Section title="Título e Slogan">
         <div className="relative">
           <h3 className="text-3xl font-extrabold text-[#ffe600] pr-12">{title}</h3>
@@ -38,6 +48,13 @@ const ProductDescriptionDisplay: React.FC<ProductDescriptionDisplayProps> = ({ d
         </div>
       </Section>
       
+      <Section title="Público-Alvo">
+         <div className="relative">
+            <p className="pr-12">{targetAudience}</p>
+            <ClipboardCopyButton textToCopy={targetAudience} />
+        </div>
+      </Section>
+
       <Section title="Descrição Detalhada">
          <div className="relative">
             <p className="whitespace-pre-wrap leading-relaxed pr-12">{detailedDescription}</p>
@@ -46,25 +63,36 @@ const ProductDescriptionDisplay: React.FC<ProductDescriptionDisplayProps> = ({ d
       </Section>
 
       <Section title="Principais Características e Benefícios">
-        <ul className="list-none space-y-3">
-          {features.map((feature, index) => (
-            <li key={index} className="flex items-start relative pr-12">
-              <span className="text-green-400 mr-3 mt-1">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-              </span>
-              <span>{feature}</span>
-              <ClipboardCopyButton textToCopy={feature} />
-            </li>
-          ))}
-        </ul>
+        {listStyle === 'numbered' ? (
+          <ol className="list-decimal list-inside space-y-3">
+            {features.map((feature, index) => (
+              <li key={index} className="relative pr-12">
+                <span>{feature}</span>
+                <ClipboardCopyButton textToCopy={feature} />
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <ul className="list-none space-y-3">
+            {features.map((feature, index) => (
+              <li key={index} className="flex items-start relative pr-12">
+                <span className="text-green-400 mr-3 mt-1 shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                </span>
+                <span>{feature}</span>
+                <ClipboardCopyButton textToCopy={feature} />
+              </li>
+            ))}
+          </ul>
+        )}
       </Section>
 
       <Section title="Especificações Técnicas">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {Object.entries(technicalSpecifications).map(([key, value]) => (
-            <div key={key} className="bg-blue-900/50 p-3 rounded-lg">
+            <div key={key} className="bg-blue-900/50 p-3 rounded-lg break-words">
               <strong className="text-slate-300">{key}:</strong> <span className="text-white">{value}</span>
             </div>
           ))}
@@ -73,12 +101,16 @@ const ProductDescriptionDisplay: React.FC<ProductDescriptionDisplayProps> = ({ d
       
       <Section title="Perguntas Frequentes (FAQ)">
         <div className="space-y-4">
-          {faq.map((item, index) => (
-            <div key={index} className="border-l-4 border-[#ffe600] pl-4">
-              <h4 className="font-semibold text-lg">{item.question}</h4>
-              <p className="mt-1 text-slate-300">{item.answer}</p>
-            </div>
-          ))}
+          {faq.map((item, index) => {
+            const textToCopy = `${item.question}\n${item.answer}`;
+            return (
+              <div key={index} className="border-l-4 border-[#ffe600] pl-4 relative pr-12">
+                <h4 className="font-semibold text-lg">{item.question}</h4>
+                <p className="mt-1 text-slate-300">{item.answer}</p>
+                <ClipboardCopyButton textToCopy={textToCopy} />
+              </div>
+            );
+          })}
         </div>
       </Section>
 

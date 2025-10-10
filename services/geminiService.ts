@@ -14,13 +14,27 @@ function cleanJsonString(str: string): string {
 
 export const generateDescription = async (
   productName: string,
-  additionalInfo: string
+  additionalInfo: string,
+  customInstructions: string,
+  seoKeywords: string,
+  listStyle: 'bullets' | 'numbered'
 ): Promise<{ description: ProductDescription; sources: Source[] }> => {
+
+  const listStyleInstruction = listStyle === 'numbered'
+    ? 'Apresente os recursos em uma ordem lógica ou de importância, pois serão exibidos em uma lista numerada.'
+    : 'Apresente os recursos como pontos distintos, pois serão exibidos em uma lista de marcadores.';
+
   const prompt = `
     Atue como um especialista em marketing e copywriting de e-commerce de classe mundial.
     Sua tarefa é criar uma descrição de produto completa e persuasiva para: "${productName}".
 
     Informações adicionais a serem consideradas: "${additionalInfo || 'Nenhuma informação adicional fornecida.'}"
+    
+    ${seoKeywords ? `\nInstruções de SEO: Tente incorporar naturalmente as seguintes palavras-chave (separadas por vírgula) na descrição detalhada e na lista de características: "${seoKeywords}"\n` : ''}
+
+    ${customInstructions ? `\nInstruções Específicas Adicionais que DEVEM ser seguidas: "${customInstructions}"\n` : ''}
+
+    Instrução sobre a lista de Características: ${listStyleInstruction}
 
     Pesquise na web usando a ferramenta de busca para obter informações detalhadas, características técnicas, benefícios e pontos de venda únicos para este produto ou produtos semelhantes.
 
@@ -28,6 +42,7 @@ export const generateDescription = async (
     {
       "title": "Um título otimizado para SEO com 60-70 caracteres.",
       "catchyPhrase": "Uma frase de efeito curta e memorável.",
+      "targetAudience": "Uma descrição concisa do público-alvo ideal para este produto (ex: 'Atletas profissionais', 'Jovens estudantes', 'Entusiastas de jardinagem'). Deduzir se não for fornecido explicitamente.",
       "detailedDescription": "Uma descrição detalhada (2-3 parágrafos) que conta uma história, evoca emoção e foca nos benefícios para o cliente. Use uma linguagem persuasiva.",
       "features": [
         "Uma lista de 5 a 7 dos recursos mais importantes, cada um apresentado como um benefício. Ex: 'Design Ergonômico: Conforto garantido durante todo o dia.'",

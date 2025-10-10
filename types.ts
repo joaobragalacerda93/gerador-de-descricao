@@ -1,7 +1,7 @@
-
 export interface ProductDescription {
   title: string;
   catchyPhrase: string;
+  targetAudience: string;
   detailedDescription: string;
   features: string[];
   technicalSpecifications: { [key: string]: string };
@@ -13,4 +13,12 @@ export interface Source {
     uri: string;
     title: string;
   };
+}
+
+export interface HistoryItem {
+  id: string;
+  productName: string;
+  description: ProductDescription;
+  sources: Source[];
+  listStyle: 'bullets' | 'numbered';
 }
