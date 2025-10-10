@@ -64,7 +64,8 @@ export const generateDescription = async (
           "question": "Segunda pergunta comum.",
           "answer": "Resposta clara e concisa para a segunda pergunta."
         }
-      ]
+      ],
+      "seoKeywords": "Uma string contendo exatamente 50 palavras-chave de SEO relevantes para o produto. Todas as palavras devem estar em minúsculo e separadas por uma única vírgula, sem espaços extras. Ex: tenis,corrida,masculino,maratona,leve,amortecimento,..."
     }
   `;
 

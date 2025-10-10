@@ -6,6 +6,7 @@ export interface ProductDescription {
   features: string[];
   technicalSpecifications: { [key: string]: string };
   faq: { question: string; answer: string }[];
+  seoKeywords: string; // Adicionado para as palavras-chave geradas
 }
 
 export interface Source {

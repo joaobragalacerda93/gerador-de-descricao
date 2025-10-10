@@ -24,7 +24,7 @@ const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title
 );
 
 const ProductDescriptionDisplay: React.FC<ProductDescriptionDisplayProps> = ({ description, sources, listStyle, fontSize }) => {
-  const { title, catchyPhrase, targetAudience, detailedDescription, features, technicalSpecifications, faq } = description;
+  const { title, catchyPhrase, targetAudience, detailedDescription, features, technicalSpecifications, faq, seoKeywords } = description;
 
   const fontSizeClasses: { [key: string]: string } = {
     sm: 'text-sm',
@@ -88,6 +88,17 @@ const ProductDescriptionDisplay: React.FC<ProductDescriptionDisplayProps> = ({ d
           </ul>
         )}
       </Section>
+      
+      {seoKeywords && (
+        <Section title="Sugestões de Palavras-chave SEO">
+          <div className="relative">
+            <div className="bg-blue-900/50 p-4 rounded-lg text-slate-300 leading-relaxed pr-12 break-words">
+              {seoKeywords}
+            </div>
+            <ClipboardCopyButton textToCopy={seoKeywords} />
+          </div>
+        </Section>
+      )}
 
       <Section title="Especificações Técnicas">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
